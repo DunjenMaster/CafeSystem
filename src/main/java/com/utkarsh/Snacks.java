@@ -2,23 +2,16 @@ package com.utkarsh;
 
 import java.util.List;
 
-public class Snacks implements Menu{
+public class Snacks extends CafeMenuItem {
 
-    private List<String> snackList = List.of("Cake", "Biscuits", "Samosa", "Patties");
-
-    public List<String> getSnackList () {
-        return snackList;
+    @Override
+    public String getMenuTitle(){
+        return "Snacks Menu: ";
     }
 
     @Override
-    public void showMenu(){
-        System.out.println("\nSnack's Menu");
-
-        int index = 1;
-        for(String snack : snackList) {
-            System.out.println(index + ". " +snack);
-            index++;
-        }
-
+    public List<String> getMenuItems(){
+        return List.of("Cake", "Biscuits", "Samosa", "Patties");
     }
+
 }

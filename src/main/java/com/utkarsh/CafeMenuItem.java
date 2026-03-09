@@ -15,9 +15,10 @@ public abstract class CafeMenuItem implements Menu{
 
         int index = 1;
         for(String item : items) {
-            System.out.println(index + ". " + items);
+            System.out.println(index + ". " + item);
             index++;
         }
+        System.out.println();
     }
 
 }
