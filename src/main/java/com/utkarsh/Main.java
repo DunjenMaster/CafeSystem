@@ -72,11 +72,34 @@ public class Main {
                     break;
 
                 case "4":
-                    System.out.println("\n====== Your Cart ======");
+                    System.out.println("\n====== Your Cart & Receipt ======");
+                    double totalBill = 0.00;
+
                     for (Map.Entry<String, Integer> entry : customerOrderDataBase.entrySet()) {
-                        System.out.println("- " + entry.getKey() + " (Qty: " + entry.getValue() + ")");
+                        String orderedItem = entry.getKey();
+                        int qty = entry.getValue();
+                        Double pricePerItem = null;
+
+                        // Search through all the menu items to find the price
+                        for (Menu menu : cafeMenu.values()) {
+                            Double foundPrice = menu.getItemPrice(orderedItem);
+                            if (foundPrice != null) {
+                                pricePerItem = foundPrice;
+                                break; // Item found stop the search.
+                            }
+                        }
+
+                        if (pricePerItem != null) {
+                            double costforThisItem = pricePerItem * qty;
+                            totalBill += costforThisItem;
+                            System.out.println("- " + orderedItem + "(Qty: " + qty + ") => ₹" + costforThisItem);
+                        } else {
+                            System.out.println("- " + orderedItem + "(Item not found in menu!)");
+                        }
                     }
 
+                    System.out.println("-----------------------------------");
+                    System.out.println("Total Ammount Due: ₹" + totalBill);
                     System.out.println("Thanks for ordering! Please revisit us again");
                     systemRunningStatus = false;
                     break;

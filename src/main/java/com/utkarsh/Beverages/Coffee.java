@@ -26,6 +26,13 @@ public class Coffee extends CafeMenuItem {
         return getHealthyCoffeeOptions;
     }
 
+    // Calculate the price of Coffee at checkout.
+    @Override
+    public Double getItemPrice(String itemName) {
+        Map<String, Double> items = getMenuItems();
+        return items.get(itemName);
+    }
+
     // To add the new coffee item in the present menu.
     public void addNewCoffeeItem(String name, Double price) {
         getHealthyCoffeeOptions.put(name, price);
