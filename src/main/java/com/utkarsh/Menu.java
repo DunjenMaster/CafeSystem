@@ -6,5 +6,5 @@ public interface Menu {
         System.out.println("Welcome to the Shukla's Cafe");
     }
 
-    void showMenu();
+    abstract void showMenu();
 }

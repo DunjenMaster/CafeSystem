@@ -2,8 +2,8 @@ package com.utkarsh.Beverages;
 
 import com.utkarsh.CafeMenuItem;
 
-//import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 public class Juice extends CafeMenuItem {
 
@@ -12,18 +12,30 @@ public class Juice extends CafeMenuItem {
         return "Juice Menu: ";
     }
 
-    @Override
-    // protected List<String> getMenuItems() {
-    // return List.of("Mousami Juice", "Orange Juice", "Pineapple Juice",
-    // "Watermelon Juice");
-    // }
+    Map<String, Double> getHealthyJuiceOptions = new HashMap<>();
 
-    protected Map<String, Double> getMenuItems() {
-        return Map.of(
-                "Mousami Juice", 120.0,
-                "Orange Juice", 135.0,
-                "Pineapple Juice", 140.0,
-                "Watermelon Juice", 150.0);
+    public Juice() {
+        getHealthyJuiceOptions.put("Mousami Juice", 120.0);
+        getHealthyJuiceOptions.put("Orange Juice", 135.0);
+        getHealthyJuiceOptions.put("Pineapple Juice", 140.0);
+        getHealthyJuiceOptions.put("Watermelon Juice", 150.0);
+        getHealthyJuiceOptions.put("Apple Juice", 160.0);
+        getHealthyJuiceOptions.put("Grapes Juice", 170.0);
+        getHealthyJuiceOptions.put("Pomegranate Juice", 180.0);
+        getHealthyJuiceOptions.put("Pineapple Juice", 190.0);
+
     }
 
+    @Override
+    protected Map<String, Double> getMenuItems() {
+        return getHealthyJuiceOptions;
+    }
+
+    public void addNewJuiceItem(String name, Double price) {
+        getHealthyJuiceOptions.put(name, price);
+    }
+
+    public void removeJuiceItem(String name) {
+        getHealthyJuiceOptions.remove(name);
+    }
 }

@@ -9,36 +9,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
-    // public static void main(String[] args) {
-
-    // Menu.cafeName();
-
-    // Scanner scanner = new Scanner(System.in);
-    // System.out.print(
-    // "\nAre you health conscious? Calculate your BMI for personalized menu
-    // recommendations! (yes/no): ");
-    // String checkBmi = scanner.nextLine();
-
-    // if (checkBmi.equalsIgnoreCase("yes")) {
-    // BMICalculator bmiCalculator = new BMICalculator();
-    // bmiCalculator.calculateAndSuggest(scanner);
-    // System.out.println("Here is our full menu for you to explore:\n");
-    // } else {
-    // System.out.println("\nAlright, here is our full menu...\n");
-    // }
-
-    // Map<String, Menu> cafeMenu = new HashMap<>();
-    // cafeMenu.put("Coffee", new Coffee());
-    // cafeMenu.put("Tea", new Tea());
-    // cafeMenu.put("Juice", new Juice());
-    // cafeMenu.put("Snacks", new Snacks());
-
-    // for (Menu menu : cafeMenu.values()) {
-    // menu.showMenu();
-    // }
-
-    // scanner.close();
-    // }
 
     public static void main(String[] args) {
 
@@ -57,8 +27,8 @@ public class Main {
         boolean systemRunningStatus = true;
         while (systemRunningStatus) {
             System.out.println("\n====== Welcome to our Cafe ======");
-            System.out.println(
-                    "1. Are you health conscious? Calculate your BMI for personalized menu recommendations! (yes/no): ");
+            System.out
+                    .println("1. Are you health conscious? Calculate your BMI for personalized menu recommendations! ");
             System.out.println("2. View Full Menu");
             System.out.println("3. Order an Item");
             System.out.println("4. View Cart & Checkout");
@@ -76,7 +46,7 @@ public class Main {
 
                     if (bmi > 0) {
                         customerBmiDataBase.put(name, bmi);
-                        System.out.println(name + "Your BMI has been saved for future reference.");
+                        System.out.println(name + " Your BMI has been saved for future reference.");
                     }
 
                     break;
@@ -108,6 +78,10 @@ public class Main {
                     }
 
                     System.out.println("Thanks for ordering! Please revisit us again");
+                    systemRunningStatus = false;
+                    break;
+
+                case "exit":
                     systemRunningStatus = false;
                     break;
 
