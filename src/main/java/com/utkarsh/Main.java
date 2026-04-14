@@ -20,10 +20,12 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         Map<String, Menu> cafeMenu = new HashMap<>();
-        cafeMenu.put("Coffee", new Coffee());
-        cafeMenu.put("Tea", new Tea());
-        cafeMenu.put("Juice", new Juice());
-        cafeMenu.put("Snacks", new Snacks());
+        
+        // Using our new Factory Pattern to populate the Map!
+        String[] categories = {"Coffee", "Tea", "Juice", "Snacks"};
+        for (String category : categories) {
+            cafeMenu.put(category, MenuFactory.getMenuCategory(category));
+        }
 
         Map<String, Double> customerBmiDataBase = new HashMap<>();
         Map<String, Integer> customerOrderDataBase = new HashMap<>();
