@@ -23,4 +23,20 @@ public abstract class CafeMenuItem implements Menu {
         System.out.println();
     }
 
+    @Override
+    public String getExactItemName(String itemName) {
+        return getMenuItems().keySet().stream()
+                .filter(key -> key.equalsIgnoreCase(itemName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public Double getItemPrice(String itemName) {
+        String exactName = getExactItemName(itemName);
+        if (exactName != null) {
+            return getMenuItems().get(exactName);
+        }
+        return null;
+    }
 }

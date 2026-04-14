@@ -31,12 +31,7 @@ public class Juice extends CafeMenuItem {
         return getHealthyJuiceOptions;
     }
 
-    // Calculate the price of Juice at checkout.
-    @Override
-    public Double getItemPrice(String itemName) {
-        Map<String, Double> items = getMenuItems();
-        return items.get(itemName);
-    }
+
 
     public void addNewJuiceItem(String name, Double price) {
         getHealthyJuiceOptions.put(name, price);

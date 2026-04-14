@@ -61,12 +61,7 @@ public class Tea extends CafeMenuItem {
         return getHealthyTeaOptions;
     }
 
-    // Calculate the price of Tea at checkout.
-    @Override
-    public Double getItemPrice(String itemName) {
-        Map<String, Double> items = getMenuItems();
-        return items.get(itemName);
-    }
+
 
     public void addNewTeaItem(String name, Double price) {
         getHealthyTeaOptions.put(name, price);

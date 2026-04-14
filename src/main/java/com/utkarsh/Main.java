@@ -53,22 +53,55 @@ public class Main {
 
                 case "2":
                     System.out.println("\n====== Menu ======");
-                    for (Menu menu : cafeMenu.values()) {
-                        menu.showMenu();
-                    }
+                    // Using Java 8 forEach and Method Reference (Menu::showMenu)
+                    cafeMenu.values().forEach(Menu::showMenu);
                     break;
 
                 case "3":
-                    System.out.println("Enter the name of the item you want to order: ");
-                    String itemName = sc.nextLine();
+                    boolean keepOrdering = true;
+                    while (keepOrdering) {
+                        try {
+                            System.out.println("Enter the name of the item you want to order: ");
+                            String itemName = sc.nextLine();
 
-                    System.out.println("Enter quantity");
-                    int quantity = sc.nextInt();
-                    sc.nextLine();
+                            // 1. Verify and properly format the case of the item using our new
+                            // getExactItemName method
+                            String exactItemName = cafeMenu.values().stream()
+                                    .map(menu -> menu.getExactItemName(itemName))
+                                    .filter(matchedName -> matchedName != null)
+                                    .findFirst()
+                                    .orElse(null);
 
-                    customerOrderDataBase.put(itemName, quantity);
-                    System.out.println(quantity + " " + itemName + " has been added to your cart.");
+                            // 2. If it doesn't exist, throw our Custom Exception!
+                            if (exactItemName == null) {
+                                throw new ItemNotFoundException(
+                                        "Sorry! The item '" + itemName + "' is not available in our menu.");
+                            }
 
+                            System.out.println("Enter quantity: ");
+                            int quantity = sc.nextInt();
+                            sc.nextLine();
+
+                            // Accumulate quantity if the item is already in the cart, using the perfectly
+                            // formatted name
+                            int currentQty = customerOrderDataBase.getOrDefault(exactItemName, 0);
+                            customerOrderDataBase.put(exactItemName, currentQty + quantity);
+                            System.out.println(quantity + " " + exactItemName + " has been added to your cart.");
+
+                        } catch (ItemNotFoundException e) {
+                            // 3. Catch our specific exception and show a friendly message
+                            System.out.println("\n[Error] " + e.getMessage());
+                        } catch (Exception e) {
+                            System.out.println("\n[Error] Invalid input for quantity. Please try again.");
+                            sc.nextLine(); // clear the scanner buffer
+                        }
+
+                        System.out.println("\nWould you like to add another item? (yes / no): ");
+                        String addMore = sc.nextLine();
+                        if (addMore.equalsIgnoreCase("no")) {
+                            keepOrdering = false;
+                        }
+                    }
                     break;
 
                 case "4":
@@ -80,14 +113,12 @@ public class Main {
                         int qty = entry.getValue();
                         Double pricePerItem = null;
 
-                        // Search through all the menu items to find the price
-                        for (Menu menu : cafeMenu.values()) {
-                            Double foundPrice = menu.getItemPrice(orderedItem);
-                            if (foundPrice != null) {
-                                pricePerItem = foundPrice;
-                                break; // Item found stop the search.
-                            }
-                        }
+                        // Search through all the menu items to find the price using Java 8 Streams
+                        pricePerItem = cafeMenu.values().stream()
+                                .map(menu -> menu.getItemPrice(orderedItem)) // Transform Menu to Price
+                                .filter(price -> price != null) // Keep only if a price is found
+                                .findFirst() // Grab the first valid price found
+                                .orElse(null); // If nothing found, keep it null
 
                         if (pricePerItem != null) {
                             double costforThisItem = pricePerItem * qty;

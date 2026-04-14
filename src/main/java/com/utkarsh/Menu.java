@@ -9,4 +9,6 @@ public interface Menu {
     abstract void showMenu();
 
     abstract Double getItemPrice(String itemName);
+    
+    abstract String getExactItemName(String itemName);
 }

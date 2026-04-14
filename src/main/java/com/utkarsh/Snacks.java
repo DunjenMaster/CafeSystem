@@ -28,12 +28,7 @@ public class Snacks extends CafeMenuItem {
                 "Patties", 30.0);
     }
 
-    // Calculate the price of Snacks at checkout.
-    @Override
-    public Double getItemPrice(String itemName) {
-        Map<String, Double> items = getMenuItems();
-        return items.get(itemName);
-    }
+
 
     public void addNewSnacksItem(String name, Double price) {
         getHealthySnacksOptions.put(name, price);
