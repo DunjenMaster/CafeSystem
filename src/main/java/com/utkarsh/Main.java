@@ -7,6 +7,10 @@ import com.utkarsh.Beverages.Tea;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Main {
 
@@ -130,7 +134,12 @@ public class Main {
                     }
 
                     System.out.println("-----------------------------------");
-                    System.out.println("Total Ammount Due: ₹" + totalBill);
+                    System.out.println("Total Amount Due: ₹" + totalBill);
+
+                    // Add modern timestamp formatting (Java 8 time API)
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    System.out.println("Date & Time: " + LocalDateTime.now().format(formatter));
+
                     System.out.println("Thanks for ordering! Please revisit us again");
                     systemRunningStatus = false;
                     break;
@@ -145,7 +154,35 @@ public class Main {
             }
         }
 
-        System.out.println("\n[SYSTEM] BMI Records for today: " + customerBmiDataBase);
+        System.out.println("\n[SYSTEM] Session ended.");
+
+        // Only save to file IF the user actually calculated their BMI!
+        if (!customerBmiDataBase.isEmpty()) {
+            try (FileWriter writer = new FileWriter("cafe_daily_report.txt", true)) {
+                DateTimeFormatter logFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                writer.write("\n=== HEALTH & DIET SESSION REPORT [" + LocalDateTime.now().format(logFormatter) + "] ===\n");
+                
+                for (Map.Entry<String, Double> bmiEntry : customerBmiDataBase.entrySet()) {
+                    writer.write("Customer Name: " + bmiEntry.getKey() + "\n");
+                    writer.write("Recorded BMI: " + String.format("%.2f", bmiEntry.getValue()) + "\n");
+                }
+                
+                writer.write("Diet Consumed (Orders): \n");
+                if (customerOrderDataBase.isEmpty()) {
+                    writer.write("- (No items ordered)\n");
+                } else {
+                    for (Map.Entry<String, Integer> orderEntry : customerOrderDataBase.entrySet()) {
+                        writer.write("- " + orderEntry.getKey() + " (Qty: " + orderEntry.getValue() + ")\n");
+                    }
+                }
+                System.out.println("[SYSTEM] Successfully saved Health & Diet records to cafe_daily_report.txt!");
+            } catch (IOException e) {
+                System.out.println("[SYSTEM ERROR] Failed to save records: " + e.getMessage());
+            }
+        } else {
+            System.out.println("[SYSTEM] Standard order only. No BMI health data to log.");
+        }
+
         sc.close();
 
     }
