@@ -1,9 +1,5 @@
 package com.utkarsh;
 
-import com.utkarsh.Beverages.Coffee;
-import com.utkarsh.Beverages.Juice;
-import com.utkarsh.Beverages.Tea;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -20,9 +16,9 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         Map<String, Menu> cafeMenu = new HashMap<>();
-        
+
         // Using our new Factory Pattern to populate the Map!
-        String[] categories = {"Coffee", "Tea", "Juice", "Snacks"};
+        String[] categories = { "Coffee", "Tea", "Juice", "Snacks" };
         for (String category : categories) {
             cafeMenu.put(category, MenuFactory.getMenuCategory(category));
         }
@@ -142,7 +138,29 @@ public class Main {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                     System.out.println("Date & Time: " + LocalDateTime.now().format(formatter));
 
-                    System.out.println("Thanks for ordering! Please revisit us again");
+                    // ---- MULTITHREADING IMPLEMENTATION START ----
+                    System.out.println("\n💳 Payment received! Sending orders to the kitchen...");
+                    
+                    // Create an array of Asynchronous Tasks (one for each unique item type in cart)
+                    java.util.concurrent.CompletableFuture<?>[] futures = customerOrderDataBase.entrySet().stream()
+                        .map(entry -> java.util.concurrent.CompletableFuture.runAsync(() -> {
+                            String orderedItem = entry.getKey();
+                            try {
+                                System.out.println("👨‍🍳 [Barista] Started preparing " + orderedItem + "...");
+                                // Pretend it takes exactly 3 seconds to brew/cook any item
+                                Thread.sleep(3000); 
+                                System.out.println("✅ [Barista] Finished! " + orderedItem + " is ready on the counter!");
+                            } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt(); // Best practice error handling for Threads
+                            }
+                        }))
+                        .toArray(java.util.concurrent.CompletableFuture[]::new);
+                    
+                    // We tell the Main Thread to wait for all the Baristas to finish before locking the doors.
+                    java.util.concurrent.CompletableFuture.allOf(futures).join();
+                    // ---- MULTITHREADING IMPLEMENTATION END ----
+
+                    System.out.println("\nThanks for ordering! Please revisit us again");
                     systemRunningStatus = false;
                     break;
 
@@ -162,13 +180,14 @@ public class Main {
         if (!customerBmiDataBase.isEmpty()) {
             try (FileWriter writer = new FileWriter("cafe_daily_report.txt", true)) {
                 DateTimeFormatter logFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                writer.write("\n=== HEALTH & DIET SESSION REPORT [" + LocalDateTime.now().format(logFormatter) + "] ===\n");
-                
+                writer.write(
+                        "\n=== HEALTH & DIET SESSION REPORT [" + LocalDateTime.now().format(logFormatter) + "] ===\n");
+
                 for (Map.Entry<String, Double> bmiEntry : customerBmiDataBase.entrySet()) {
                     writer.write("Customer Name: " + bmiEntry.getKey() + "\n");
                     writer.write("Recorded BMI: " + String.format("%.2f", bmiEntry.getValue()) + "\n");
                 }
-                
+
                 writer.write("Diet Consumed (Orders): \n");
                 if (customerOrderDataBase.isEmpty()) {
                     writer.write("- (No items ordered)\n");

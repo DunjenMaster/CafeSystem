@@ -4,3 +4,10 @@ BMI Records: {Uk=29.06879615089044}
 Orders Placed: {Black Coffee=2, Latte=3}
 
 
+
+=== HEALTH & DIET SESSION REPORT [2026-04-14 18:12] ===
+Customer Name: Angel One
+Recorded BMI: 28.13
+Diet Consumed (Orders): 
+- Black Coffee (Qty: 1)
+- Patties (Qty: 1)
