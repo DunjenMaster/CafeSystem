@@ -20,15 +20,13 @@ public class Snacks extends CafeMenuItem {
     }
 
     @Override
-    protected Map<String, Double> getMenuItems() {
+    public Map<String, Double> getMenuItems() {
         return Map.of(
                 "Cake", 100.0,
                 "Biscuits", 50.0,
                 "Samosa", 20.0,
                 "Patties", 30.0);
     }
-
-
 
     public void addNewSnacksItem(String name, Double price) {
         getHealthySnacksOptions.put(name, price);

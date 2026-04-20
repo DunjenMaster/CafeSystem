@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Juice extends CafeMenuItem {
 
     @Override
-    protected String getMenuTitle() {
+    public String getMenuTitle() {
         return "Juice Menu: ";
     }
 
@@ -27,11 +27,9 @@ public class Juice extends CafeMenuItem {
     }
 
     @Override
-    protected Map<String, Double> getMenuItems() {
+    public Map<String, Double> getMenuItems() {
         return getHealthyJuiceOptions;
     }
-
-
 
     public void addNewJuiceItem(String name, Double price) {
         getHealthyJuiceOptions.put(name, price);

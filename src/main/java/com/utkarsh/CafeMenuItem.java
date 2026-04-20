@@ -4,9 +4,9 @@ import java.util.Map;
 
 public abstract class CafeMenuItem implements Menu {
 
-    protected abstract String getMenuTitle();
+    public abstract String getMenuTitle();
 
-    protected abstract Map<String, Double> getMenuItems();
+    public abstract Map<String, Double> getMenuItems();
 
     @Override
     public void showMenu() {

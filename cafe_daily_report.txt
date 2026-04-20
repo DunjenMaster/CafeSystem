@@ -11,3 +11,16 @@ Recorded BMI: 28.13
 Diet Consumed (Orders): 
 - Black Coffee (Qty: 1)
 - Patties (Qty: 1)
+
+=== HEALTH & DIET SESSION REPORT [2026-04-15 15:40] ===
+Customer Name: Uk
+Recorded BMI: 29.40
+Diet Consumed (Orders): 
+- Pineapple Juice (Qty: 1)
+- Regular Milk Tea (Qty: 1)
+
+=== HEALTH & DIET SESSION REPORT [2026-04-15 21:21] ===
+Customer Name: Dhinchak Pooja
+Recorded BMI: 29.43
+Diet Consumed (Orders): 
+- Lemon Grass Tea (Qty: 1)

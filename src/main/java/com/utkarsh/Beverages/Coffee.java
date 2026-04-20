@@ -8,7 +8,7 @@ import java.util.Map;
 public class Coffee extends CafeMenuItem {
 
     @Override
-    protected String getMenuTitle() {
+    public String getMenuTitle() {
         return "Coffee Menu: ";
     }
 
@@ -22,11 +22,9 @@ public class Coffee extends CafeMenuItem {
     }
 
     @Override
-    protected Map<String, Double> getMenuItems() {
+    public Map<String, Double> getMenuItems() {
         return getHealthyCoffeeOptions;
     }
-
-
 
     // To add the new coffee item in the present menu.
     public void addNewCoffeeItem(String name, Double price) {

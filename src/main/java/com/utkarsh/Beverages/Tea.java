@@ -57,11 +57,9 @@ public class Tea extends CafeMenuItem {
     }
 
     @Override
-    protected Map<String, Double> getMenuItems() {
+    public Map<String, Double> getMenuItems() {
         return getHealthyTeaOptions;
     }
-
-
 
     public void addNewTeaItem(String name, Double price) {
         getHealthyTeaOptions.put(name, price);
